@@ -15,6 +15,8 @@ import torch
 import bitsandbytes as bnb
 from huggingface_hub import login, HfFolder
 
+import wandb
+
 
 def parse_arge():
     """Parse the arguments."""
@@ -65,8 +67,15 @@ def parse_arge():
         default=True,
         help="Whether to merge LoRA weights with base model.",
     )
+    parser.add_argument(
+        "--wandb_project",
+        type=str,
+        default="sm_llm_ft",
+        help="Wandb project name",
+    )
     args, _ = parser.parse_known_args()
-
+    
+    
     if args.hf_token:
         print(f"Logging into the Hugging Face Hub with token {args.hf_token[:10]}...")
         login(token=args.hf_token)
@@ -157,11 +166,13 @@ def create_peft_model(model, gradient_checkpointing=True, bf16=True):
     return model
 
 
+
 def training_function(args):
     # set seed
     set_seed(args.seed)
 
     dataset = load_from_disk(args.dataset_path)
+    
     # load model from the hub with a bnb config
     bnb_config = BitsAndBytesConfig(
         load_in_4bit=True,
@@ -199,7 +210,9 @@ def training_function(args):
         logging_steps=10,
         save_strategy="no",
     )
-
+    
+    wandb.init(project=args.wandb_project)
+    
     # Create Trainer instance
     trainer = Trainer(
         model=model,
@@ -210,7 +223,7 @@ def training_function(args):
 
     # Start training
     trainer.train()
-
+    
     sagemaker_save_dir="/opt/ml/model/"
     if args.merge_weights:
         # merge adapter weights with base model and save
@@ -238,10 +251,16 @@ def training_function(args):
         trainer.model.save_pretrained(
             sagemaker_save_dir, safe_serialization=True
         )
+        if wandb.run:
+            at = wandb.Artifact(name="codellama7_wandb", 
+                                type="model",
+                                description="A CodeLlama7B expert on W&B")
+            at.add_reference(sagemaker_save_dir)
+            wandb.log_artifact(at)
 
     # save tokenizer for easy inference
-    tokenizer = AutoTokenizer.from_pretrained(args.model_id)
-    tokenizer.save_pretrained(sagemaker_save_dir)
+    # tokenizer = AutoTokenizer.from_pretrained(args.model_id)
+    # tokenizer.save_pretrained(sagemaker_save_dir)
 
 
 def main():
