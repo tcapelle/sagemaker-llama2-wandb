@@ -263,7 +263,7 @@ def training_function(args):
         at = wandb.Artifact(name="codellama7_wandb", 
                             type="model",
                             description="A CodeLlama7B expert on W&B")
-        at.add_reference(sagemaker_save_dir)
+        at.add_dir(sagemaker_save_dir)
         wandb.log_artifact(at)
 
     # save tokenizer for easy inference
