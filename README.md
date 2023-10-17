@@ -1,16 +1,15 @@
 # Finetuning CodeLlama on the Weights & Biases API
 
 In this repo you have the relevant code to train a CodeLLama model on instruction dataset gathered by the [wandbot](github.com/wandb/wandbot).
-- It uses the Huggignface Inteagrtion with Sagemaker
+- It uses the Huggignface Integration with Sagemaker
 - Formats the dataset accordingly
 - Evaluates the model in freshly gathered data
 
 > More info on the HF tools used: [transformers](https://huggingface.co/docs/transformers/index), [datasets](https://huggingface.co/docs/datasets/index).
 
-### Training
+# Training
 * [Data preparation with W&B](./training/01_data_prep.ipynb)
 * [Fine-tune CodeLLaMA on Amazon SageMaker](./training/02_training_codellama.ipynb) 
-* [Deploy Llama 2 (7B - 70B) on Amazon SageMaker](./inference/sagemaker-notebook.ipynb) 
 
 ## Requirements
 
