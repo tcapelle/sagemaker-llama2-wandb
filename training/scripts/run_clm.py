@@ -259,12 +259,12 @@ def training_function(args):
         trainer.model.save_pretrained(
             sagemaker_save_dir, safe_serialization=True
         )
-        if wandb.run:
-            at = wandb.Artifact(name="codellama7_wandb", 
-                                type="model",
-                                description="A CodeLlama7B expert on W&B")
-            at.add_reference(sagemaker_save_dir)
-            wandb.log_artifact(at)
+    if wandb.run:
+        at = wandb.Artifact(name="codellama7_wandb", 
+                            type="model",
+                            description="A CodeLlama7B expert on W&B")
+        at.add_reference(sagemaker_save_dir)
+        wandb.log_artifact(at)
 
     # save tokenizer for easy inference
     # tokenizer = AutoTokenizer.from_pretrained(args.model_id)
