@@ -11,6 +11,8 @@ In this repo you have the relevant code to train a CodeLLama model on instructio
 * [Data preparation with W&B](./training/01_data_prep.ipynb)
 * [Fine-tune CodeLLaMA on Amazon SageMaker](./training/02_training_codellama.ipynb) 
 
+## W&B workspace: https://wandb.ai/capecape/aws_llm_workshop
+
 ## Requirements
 
 Before we can start make sure you have met the following requirements
