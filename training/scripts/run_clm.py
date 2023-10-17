@@ -166,12 +166,21 @@ def create_peft_model(model, gradient_checkpointing=True, bf16=True):
     return model
 
 
+def load_from_artifact(at_address, at_type="dataset"):
+    "Load a HF dataset from a W&B artifact"
+    artifact = wandb.use_artifact(at_address, type=at_type)
+    artifact_dir = artifact.download()
+    return load_from_disk(artifact_dir)
+
 
 def training_function(args):
     # set seed
     set_seed(args.seed)
+    
+    wandb.init(project=args.wandb_project, job_type="finetune")
 
-    dataset = load_from_disk(args.dataset_path)
+    # dataset = load_from_disk(args.dataset_path)
+    dataset = load_from_artifact(args.dataset_path)
     
     # load model from the hub with a bnb config
     bnb_config = BitsAndBytesConfig(
@@ -211,7 +220,6 @@ def training_function(args):
         save_strategy="no",
     )
     
-    wandb.init(project=args.wandb_project)
     
     # Create Trainer instance
     trainer = Trainer(
