@@ -1,5 +1,7 @@
 # Finetuning CodeLlama on the Weights & Biases API
 
+[>> W&B Companion Report <<](https://wandb.ai/capecape/aws_llm_workshop/reports/Finetuning-an-Open-Source-LLM-in-AWS-SageMaker-with-W-B--Vmlldzo1Njk4MDc1)
+
 In this repo you have the relevant code to train a CodeLLama model on instruction dataset gathered by the [wandbot](github.com/wandb/wandbot).
 - It uses the Huggignface Integration with Sagemaker
 - Formats the dataset accordingly
@@ -13,6 +15,8 @@ In this repo you have the relevant code to train a CodeLLama model on instructio
 * [Deploy to and Endpoint](./03_inference.ipynb)
 
 ## W&B workspace: https://wandb.ai/capecape/aws_llm_workshop
+
+
 
 ## Requirements
 
