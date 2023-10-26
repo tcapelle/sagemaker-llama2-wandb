@@ -8,8 +8,9 @@ In this repo you have the relevant code to train a CodeLLama model on instructio
 > More info on the HF tools used: [transformers](https://huggingface.co/docs/transformers/index), [datasets](https://huggingface.co/docs/datasets/index).
 
 # Training
-* [Data preparation with W&B](./training/01_data_prep.ipynb)
-* [Fine-tune CodeLLaMA on Amazon SageMaker](./training/02_training_codellama.ipynb) 
+* [Data preparation with W&B](./01_data_prep.ipynb)
+* [Fine-tune CodeLLaMA on Amazon SageMaker](./02_training_codellama.ipynb) 
+* [Deploy to and Endpoint](./03_inference.ipynb)
 
 ## W&B workspace: https://wandb.ai/capecape/aws_llm_workshop
 
