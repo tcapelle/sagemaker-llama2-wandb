@@ -267,8 +267,8 @@ def training_function(args):
         wandb.log_artifact(at)
 
     # save tokenizer for easy inference
-    # tokenizer = AutoTokenizer.from_pretrained(args.model_id)
-    # tokenizer.save_pretrained(sagemaker_save_dir)
+    tokenizer = AutoTokenizer.from_pretrained(args.model_id)
+    tokenizer.save_pretrained(sagemaker_save_dir)
 
 
 def main():
